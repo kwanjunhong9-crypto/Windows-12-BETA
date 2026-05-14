@@ -1,0 +1,6 @@
+{
+  "name": "Win11 Web OS",
+  "description": "A polished Windows 11-inspired desktop environment built with React, Tailwind CSS, and Framer Motion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
