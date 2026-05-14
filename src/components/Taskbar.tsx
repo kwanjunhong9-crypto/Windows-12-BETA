@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Search, Layout, Wifi, Volume2, Battery, Calendar as CalendarIcon } from 'lucide-react';
-import { APPS } from '../constants';
+import { APPS, WindowsLogo } from '../constants';
 import { AppID, WindowInstance } from '../types';
 import { useState, useEffect } from 'react';
 
@@ -30,8 +30,8 @@ export default function Taskbar({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-12 flex items-center justify-between px-2 z-[999] win-taskbar-dark">
-      {/* Search / Widgets (Mobile style left) */}
-      <div className="flex-1 hidden md:flex items-center gap-1">
+      {/* Widgets (Left) */}
+      <div className="flex-1 hidden md:flex items-center gap-1 pl-2">
         <button className="win-button w-10 h-10 text-white/80">
           <Layout size={18} />
         </button>
@@ -45,18 +45,14 @@ export default function Taskbar({
           className="win-button w-10 h-10 group"
           title="Start"
         >
-          <div className="relative w-6 h-6 group-hover:scale-110 transition-transform duration-200">
-            {/* Recreating the modern colorful logo with SVG-like divs */}
-            <div className="absolute top-0 left-0 w-3 h-3 bg-gradient-to-br from-purple-400 to-pink-500 rounded-sm shadow-sm opacity-90 transform -translate-x-0.5" />
-            <div className="absolute top-0 right-0 w-3 h-3 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-sm shadow-sm opacity-90 transform translate-y-0.5" />
-            <div className="absolute bottom-0 left-0 w-3 h-3 bg-gradient-to-br from-blue-500 to-blue-400 rounded-sm shadow-sm opacity-90" />
-            <div className="absolute bottom-0 right-0 w-3 h-3 bg-gradient-to-br from-sky-400 to-cyan-300 rounded-sm shadow-sm opacity-90 transform -translate-y-0.5 translate-x-0.5" />
-          </div>
+          <WindowsLogo size={24} />
         </button>
 
-        <button className="win-button w-10 h-10 text-white/80">
-          <Search size={20} />
-        </button>
+        {/* Search Pill */}
+        <div className="mx-1 h-9 rounded-full bg-white/10 hover:bg-white/15 transition-colors border border-white/5 flex items-center px-3 gap-2 cursor-text group min-w-[120px] lg:min-w-[180px]">
+          <Search size={16} className="text-white/60 group-hover:text-white/90" />
+          <span className="text-[11px] text-white/50 group-hover:text-white/80">Search</span>
+        </div>
 
         {/* Pinned Apps */}
         {pinnedApps.map(app => (
@@ -65,9 +61,11 @@ export default function Taskbar({
              onClick={() => onOpenApp(app.id)}
              className="win-button w-10 h-10 relative group"
           >
-            <app.icon size={22} color={app.color} className="group-hover:scale-110 transition-transform duration-200" />
+            <app.icon size={26} color={app.color} className="group-hover:scale-110 transition-transform duration-200" />
           </button>
         ))}
+
+        <div className="w-px h-6 bg-white/10 mx-1" />
 
         {/* Open Apps Indicators */}
         {openWindows.map(window => {
@@ -81,10 +79,10 @@ export default function Taskbar({
               onClick={() => onAppClick(window.id)}
               className={`win-button w-10 h-10 relative group ${isActive ? 'bg-white/10' : ''}`}
             >
-              <app.icon size={22} color={app.color} />
-              <div className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 rounded-full bg-white transition-all duration-300 ${isActive ? 'w-4' : 'w-1 bg-white/40'}`} />
+              <app.icon size={26} color={app.color} />
+              <div className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-sky-400 transition-all duration-300 ${isActive ? 'w-4 opacity-100' : 'w-1 opacity-40 hover:opacity-100'}`} />
             </button>
-          );
+          )
         })}
       </div>
 
